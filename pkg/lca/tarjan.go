@@ -5,7 +5,7 @@ type TarjanData struct {
 	Parent   map[Key]Key
 	Rank     map[Key]int
 	Ancestor map[Key]Key
-	Colored  map[Key]bool
+	Colored  map[Key]Key
 
 	Total map[Key]map[Key]Key
 
@@ -18,32 +18,32 @@ func Tarjan(d *Directory) map[Key]map[Key]Key {
 		Parent:   make(map[Key]Key),
 		Rank:     make(map[Key]int),
 		Ancestor: make(map[Key]Key),
-		Colored:  make(map[Key]bool),
+		Colored:  make(map[Key]Key),
 		Total:    make(map[Key]map[Key]Key),
 	}
 
-	t.calculateLCA(d)
+	t.calculateLCA(d.Name, d)
 	return t.Total
 }
 
 // calculateLCA finds LCA using path compression and union by rank heuristics.
-func (td *TarjanData) calculateLCA(u *Directory) {
+func (td *TarjanData) calculateLCA(manager Key, u *Directory) {
 	td.makeSet(u.Name)
 	td.Ancestor[td.findSet(u.Name)] = u.Name
 
 	for _, v := range u.Employees {
-		td.calculateLCA(&v)
+		td.calculateLCA(u.Name, &v)
 
 		td.union(u.Name, v.Name)
 		td.Ancestor[td.findSet(u.Name)] = u.Name
 	}
 
-	td.Colored[u.Name] = true
+	td.Colored[u.Name] = manager
 
 	// If u is one of two people (A and B) we are looking for,
 	// let's see if we already "colored" another person (key) from this couple.
 	// If so, LCA between A and B is the ancestor of key's set
-	for key := range td.Colored {
+	for key, keyManager := range td.Colored {
 		lca := td.Ancestor[td.findSet(key)]
 		var emp1, emp2 Key
 		if u.Name <= key {
@@ -61,11 +61,11 @@ func (td *TarjanData) calculateLCA(u *Directory) {
 		// In our case LCA mustn't be a person itself,
 		// so if LCA between two employees is one of them,
 		// we need choose a manager of this employee
-		/*if lca == emp1 {
-			lca = TODO
-		} else if lca == emp2 {
-			lca = TODO
-		}*/
+		if lca == u.Name {
+			lca = manager
+		} else if lca == key {
+			lca = keyManager
+		}
 
 		td.Total[emp1][emp2] = lca
 	}
