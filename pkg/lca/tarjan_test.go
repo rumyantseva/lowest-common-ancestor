@@ -8,11 +8,11 @@ func TestMakeSet(t *testing.T) {
 	td := prepareEmptyData()
 	td.makeSet(key)
 
-	if td.Rank[key] != 0 {
+	if td.rank[key] != 0 {
 		t.Fail()
 	}
 
-	if td.Parent[key] != key {
+	if td.parent[key] != key {
 		t.Fail()
 	}
 }
@@ -29,8 +29,8 @@ func TestFindSet(t *testing.T) {
 	td.makeSet(key2)
 
 	// Make key1 as child and key2 as parent
-	td.Parent[key1] = key2
-	td.Rank[key2]++
+	td.parent[key1] = key2
+	td.rank[key2]++
 
 	setOfKey1 := td.findSet(key1)
 	if setOfKey1 != key2 {
@@ -93,11 +93,11 @@ func TestUnion(t *testing.T) {
 	}
 }
 
-func prepareEmptyData() *TarjanData {
-	return &TarjanData{
-		Parent:   make(map[Key]Key),
-		Rank:     make(map[Key]int),
-		Ancestor: make(map[Key]Key),
-		Colored:  make(map[Key]bool),
+func prepareEmptyData() *Tarjan {
+	return &Tarjan{
+		parent:   make(map[Key]Key),
+		rank:     make(map[Key]int),
+		ancestor: make(map[Key]Key),
+		colored:  make(map[Key]bool),
 	}
 }

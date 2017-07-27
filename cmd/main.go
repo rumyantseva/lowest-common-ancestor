@@ -2,14 +2,21 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
+	"net/http"
 	"os"
 
+	"github.com/julienschmidt/httprouter"
+	"github.com/rumyantseva/lowest-common-ancestor/pkg/handlers"
 	"github.com/rumyantseva/lowest-common-ancestor/pkg/lca"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if len(port) == 0 {
+		port = "8888"
+	}
+
 	config := os.Getenv("CONFIG_FILE")
 	if len(config) == 0 {
 		config = "./default_config.json"
@@ -22,19 +29,18 @@ func main() {
 		log.Fatalf("Couldn't open config file: %s", err.Error())
 	}
 
-	var bureau lca.Directory
+	var bureau lca.Node
 	err = json.NewDecoder(file).Decode(&bureau)
 	if err != nil {
 		log.Fatalf("Couldn't parse data from file: %s", err.Error())
 	}
 
-	log.Printf("Data loaded. The CEO is %s.", bureau.Name)
+	log.Printf("Data loaded. The CEO is %s.", bureau.Key)
 
-	lcaMatrix := lca.Tarjan(&bureau)
+	tarjan := lca.NewTarjan(&bureau)
 
-	for name1, val := range lcaMatrix {
-		for name2, manager := range val {
-			fmt.Printf("LCA between %s and %s is %s\n", name1, name2, manager)
-		}
-	}
+	router := httprouter.New()
+	router.GET("/api/v1/lowest-common-manager", handlers.LowestCommonManager(tarjan))
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
