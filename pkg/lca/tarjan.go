@@ -7,35 +7,32 @@ type TarjanData struct {
 	Ancestor map[Key]Key
 	Colored  map[Key]bool
 
+	Total map[Key]map[Key]Key
+
 	LCA Key
-	A   Key
-	B   Key
 }
 
 // Tarjan release Tarjan's LCA algorithm.
-func Tarjan(d *Directory, a, b Key) Key {
+func Tarjan(d *Directory) map[Key]map[Key]Key {
 	t := &TarjanData{
 		Parent:   make(map[Key]Key),
 		Rank:     make(map[Key]int),
 		Ancestor: make(map[Key]Key),
 		Colored:  make(map[Key]bool),
-		A:        a,
-		B:        b,
+		Total:    make(map[Key]map[Key]Key),
 	}
 
 	t.calculateLCA(d)
-	return t.LCA
+	return t.Total
 }
 
 // calculateLCA finds LCA using path compression and union by rank heuristics.
-func (td *TarjanData) calculateLCA(u *Directory) bool {
+func (td *TarjanData) calculateLCA(u *Directory) {
 	td.makeSet(u.Name)
 	td.Ancestor[td.findSet(u.Name)] = u.Name
 
 	for _, v := range u.Employees {
-		if td.calculateLCA(&v) {
-			return true
-		}
+		td.calculateLCA(&v)
 
 		td.union(u.Name, v.Name)
 		td.Ancestor[td.findSet(u.Name)] = u.Name
@@ -44,21 +41,34 @@ func (td *TarjanData) calculateLCA(u *Directory) bool {
 	td.Colored[u.Name] = true
 
 	// If u is one of two people (A and B) we are looking for,
-	// let's see if we already "colored" another person (k) from this couple.
-	// If so, LCA between A and B is the ancestor of k's set
-	var k Key
-	if u.Name == td.A {
-		k = td.B
-	} else if u.Name == td.B {
-		k = td.A
-	}
+	// let's see if we already "colored" another person (key) from this couple.
+	// If so, LCA between A and B is the ancestor of key's set
+	for key := range td.Colored {
+		lca := td.Ancestor[td.findSet(key)]
+		var emp1, emp2 Key
+		if u.Name <= key {
+			emp1 = u.Name
+			emp2 = key
+		} else {
+			emp1 = key
+			emp2 = u.Name
+		}
 
-	if len(k) > 0 && td.Colored[k] {
-		td.LCA = td.Ancestor[td.findSet(k)]
-		return true
-	}
+		if len(td.Total[emp1]) == 0 {
+			td.Total[emp1] = make(map[Key]Key)
+		}
 
-	return false
+		// In our case LCA mustn't be a person itself,
+		// so if LCA between two employees is one of them,
+		// we need choose a manager of this employee
+		/*if lca == emp1 {
+			lca = TODO
+		} else if lca == emp2 {
+			lca = TODO
+		}*/
+
+		td.Total[emp1][emp2] = lca
+	}
 }
 
 // makeSet creates a tree with one node.
@@ -81,7 +91,7 @@ func (td *TarjanData) findSet(x Key) Key {
 
 // link makes a link from a root from one element to another.
 // An element with a bigger rank becomes a parent.
-func (td *TarjanData) link(x Key, y Key) {
+func (td *TarjanData) link(x, y Key) {
 	if td.Rank[x] > td.Rank[y] {
 		td.Parent[y] = x
 	} else {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 
@@ -29,7 +30,11 @@ func main() {
 
 	log.Printf("Data loaded. The CEO is %s.", bureau.Name)
 
-	log.Print(bureau)
+	lcaMatrix := lca.Tarjan(&bureau)
 
-	log.Printf("LCA is: %s", lca.Tarjan(&bureau, "Grace", "Ivo"))
+	for name1, val := range lcaMatrix {
+		for name2, manager := range val {
+			fmt.Printf("LCA between %s and %s is %s\n", name1, name2, manager)
+		}
+	}
 }
