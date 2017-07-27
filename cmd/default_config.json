@@ -1,0 +1,93 @@
+{
+  "name": "Clair",
+  "employees": [
+    {
+      "name": "Anna",
+      "employees": [
+        {
+          "name": "Eliah"
+        },
+        {
+          "name": "Faith",
+          "employees": [
+            {
+              "name": "Grace"
+            },
+            {
+              "name": "Harry"
+            },
+            {
+              "name": "Ivo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bob",
+      "employees": [
+        {
+          "name": "Jemima",
+          "employees": [
+            {
+              "name": "Kim",
+              "employees": [
+                {
+                  "name": "Lora",
+                  "employees": [
+                    {
+                      "name": "Mona"
+                    },
+                    {
+                      "name": "Nick",
+                      "employees": [
+                        {
+                          "name": "Pallu"
+                        },
+                        {
+                          "name": "Quin"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Onam"
+                    }
+                  ]
+                },
+                {
+                  "name": "Ruth"
+                },
+                {
+                  "name": "Sheila",
+                  "employees": [
+                    {
+                      "name": "Tina"
+                    },
+                    {
+                      "name": "Utai"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Wilma"
+            }
+          ]
+        },
+        {
+          "name": "Victor"
+        },
+        {
+          "name": "Yan"
+        },
+        {
+          "name": "Zoe"
+        }
+      ]
+    },
+    {
+      "name": "Dora"
+    }
+  ]
+}
