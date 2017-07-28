@@ -81,7 +81,8 @@ we need to use unique IDs or something like this.
 
 5. There are no too many validation levels in this service. For example, there is no validation of
 unique names in configuration file and there is no too much validation in API requests processing.
-In production-ready case validation must be realized better.
+In production-ready case validation must be realized better. 
+For production-ready application validation must be extended.
 
 6. When the service starts, it makes a "matrix" of the names of the closest Managers.
 When the matrix is built, the service is ready to listen to the requests.
