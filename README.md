@@ -82,13 +82,17 @@ we need to use unique IDs or something like this.
 unique names in configuration file and there is no too much validation in API requests processing.
 In production-ready case validation must be realized better.
 
-6. Then the service starts, it makes a "matrix" of the names of the closest Managers.
-Then the matrix is built, the service is ready to listen to the requests.
+6. When the service starts, it makes a "matrix" of the names of the closest Managers.
+When the matrix is built, the service is ready to listen to the requests.
 The matrix stores as in-memory structure represented by map.
 The matrix is symmetric, so for each couple of the Employees there is only one entry in the matrix.
 The matrix stores N * [N - 1] / 2 elements where N is a total count of the Employyes.
 
-## Gettitng started 
+## TODO
+
+Add more tests!
+
+## Getting started 
 
 We need [Go](https://golang.org) and [Glide](https://glide.sh) to be able to prepare the service.
 
@@ -101,3 +105,10 @@ Request example:
 
 ## Demo
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rumyantseva/lowest-common-ancestor)
+
+
+
+Default config is represented by this visualisation:
+
+![Default Config](ccm-example.png)

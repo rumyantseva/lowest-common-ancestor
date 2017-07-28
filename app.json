@@ -1,0 +1,17 @@
+{
+  "name": "Closest Common Manager",
+  "description": "This app allows to find the Closest Common Manager between any two Employees",
+  "keywords": [
+    "lca",
+    "go"
+  ],
+  "image": "heroku/go:1.8",
+  "mount_dir": "src/github.com/rumyantseva/lowest-common-ancestor",
+  "website": "https://github.com/rumyantseva/lowest-common-ancestor",
+  "repository": "https://github.com/rumyantseva/lowest-common-ancestor",
+  "env": {
+    "CONFIG_FILE": {
+      "description": "File contains Bureaucr.at configuration"
+    }
+  }
+}
