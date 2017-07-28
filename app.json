@@ -10,7 +10,11 @@
   "website": "https://github.com/rumyantseva/lowest-common-ancestor",
   "repository": "https://github.com/rumyantseva/lowest-common-ancestor",
   "env": {
+    "GO_INSTALL_PACKAGE_SPEC": {
+      "value": "./cmd"
+    },
     "CONFIG_FILE": {
+      "value": "/app/cmd/default_config.json",
       "description": "File contains Bureaucr.at configuration"
     }
   }

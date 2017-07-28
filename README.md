@@ -88,9 +88,16 @@ The matrix stores as in-memory structure represented by map.
 The matrix is symmetric, so for each couple of the Employees there is only one entry in the matrix.
 The matrix stores N * [N - 1] / 2 elements where N is a total count of the Employyes.
 
+7. To find the Closest Common Manager between Employees A and B send a request:
+    
+        GET /api/v1/closest-common-manager?employees=A,B
+        
+    The response will contain the Closest Common Manager name.
+
 ## TODO
 
-Add more tests!
+- Add more tests
+- Add better documentation of API
 
 ## Getting started 
 
@@ -101,14 +108,16 @@ We need [Go](https://golang.org) and [Glide](https://glide.sh) to be able to pre
 
 Request example:
 
-    curl -i http://127.0.0.1:8888/api/v1/lowest-common-manager?employees=Faith,Ivo
+    curl -i http://127.0.0.1:8888/api/v1/closest-common-manager?employees=Faith,Ivo
 
 ## Demo
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rumyantseva/lowest-common-ancestor)
 
+You can find a working demo here following the secret link:
 
+https://secret-demo-98d173f7.herokuapp.com/api/v1/closest-common-manager?employees=Zoe,Yan
 
-Default config is represented by this visualisation:
+Released config might be represented by this visualisation: `ccm-example.png` 
 
 ![Default Config](ccm-example.png)
