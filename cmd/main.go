@@ -40,7 +40,7 @@ func main() {
 	tarjan := lca.NewTarjan(&bureau)
 
 	router := httprouter.New()
-	router.GET("/api/v1/lowest-common-manager", handlers.LowestCommonManager(tarjan))
+	router.GET("/api/v1/lowest-common-manager", handlers.ClosestCommonManager(tarjan))
 
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }

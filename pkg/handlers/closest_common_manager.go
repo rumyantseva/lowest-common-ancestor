@@ -11,7 +11,7 @@ import (
 )
 
 // Find handles request of finding lowest common manager between two employees.
-func LowestCommonManager(calc lca.Finder) httprouter.Handle {
+func ClosestCommonManager(calc lca.Finder) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		emp := r.URL.Query().Get("employees")
 		if len(emp) == 0 {

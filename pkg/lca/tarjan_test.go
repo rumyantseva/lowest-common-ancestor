@@ -98,6 +98,6 @@ func prepareEmptyData() *Tarjan {
 		parent:   make(map[Key]Key),
 		rank:     make(map[Key]int),
 		ancestor: make(map[Key]Key),
-		colored:  make(map[Key]bool),
+		colored:  make(map[Key]Key),
 	}
 }
