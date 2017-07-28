@@ -50,7 +50,7 @@ assume that the node was colored.
 2. The organization's structure must be given as a JSON object represented by this JSON schema 
 (see an example in `cmd/default_config.json`):
 
-    
+    ```    
     {
         "title": "A directory",
         "type": "object",
@@ -69,6 +69,7 @@ assume that the node was colored.
         },
         "required": ["name"]
     }
+    ```
     
 3. To deal with nodes of the tree we need to use unique names.
 Assume that names of all Employees are unique. Otherwise,
